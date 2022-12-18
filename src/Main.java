@@ -18,7 +18,7 @@ public class Main {
     private static String montarCalendarioMes(int mes, int ano) {
         Calendar c = inicializarCalendario(mes, ano);
 
-        String mesMontado=montarCabecalho(mes,ano);
+        String mesMontado= montarCabecalhoMes(mes,ano);
         String semana = "";
 
         for (int dia = 1; dia <= c.getActualMaximum(Calendar.DAY_OF_MONTH); dia++) {
@@ -46,7 +46,7 @@ public class Main {
         return c;
     }
 
-    private static String montarCabecalho(int mes, int ano) {
+    private static String montarCabecalhoMes(int mes, int ano) {
         String cabecalho = "--------------\n";
         cabecalho = cabecalho.concat(String.format("%02d",mes + 1).concat("/").concat(ano+"\n"));
         cabecalho = cabecalho.concat("--------------\n");
