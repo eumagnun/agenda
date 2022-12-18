@@ -4,20 +4,23 @@ import java.util.GregorianCalendar;
 public class Main {
 
     public static void main(String[] args) {
-        imprimirCalendarioAno(2022);
+        System.out.println(montarCalendarioAno(2022));
     }
 
-    private static void imprimirCalendarioAno(int ano){
+    private static String montarCalendarioAno(int ano){
+        String anoMontado = "";
         for (int mes = Calendar.JANUARY; mes <= Calendar.DECEMBER; mes++) {
-            imprimirCalendarioMes(mes, ano);
+            anoMontado= anoMontado.concat(montarCalendarioMes(mes, ano)).concat("\n");
         }
+        return anoMontado;
     }
-    private static void imprimirCalendarioMes(int mes, int ano) {
+
+    private static String montarCalendarioMes(int mes, int ano) {
         Calendar c = inicializarCalendario(mes, ano);
 
-        imprimirCabecalho(mes,ano);
-
+        String mesMontado=montarCabecalho(mes,ano);
         String semana = "";
+
         for (int dia = 1; dia <= c.getActualMaximum(Calendar.DAY_OF_MONTH); dia++) {
             c.set(Calendar.DAY_OF_MONTH, dia);
 
@@ -27,11 +30,12 @@ public class Main {
                 semana = semana.concat(String.format("%02d", c.get(Calendar.DAY_OF_MONTH)) + " - ");
             } else {
                 semana = semana.concat(String.format("%02d", c.get(Calendar.DAY_OF_MONTH)));
-                System.out.println(semana);
+                mesMontado = mesMontado.concat(semana).concat("\n");
                 semana = "";
             }
-            tratarExibicaoDaUltimaSemanaDoMes(c, semana);
+            mesMontado = mesMontado.concat(tratarExibicaoDaUltimaSemanaDoMes(c, semana));
         }
+        return mesMontado;
     }
 
     private static Calendar inicializarCalendario(int mes, int ano) {
@@ -42,28 +46,28 @@ public class Main {
         return c;
     }
 
-    private static void imprimirCabecalho(int mes, int ano) {
-        System.out.println("--------------");
-        System.out.println(String.format("%02d",mes + 1).concat("/").concat(ano+""));
-        System.out.println("--------------");
-        System.out.println("su - mo - tu - we - th - fr - sat");
+    private static String montarCabecalho(int mes, int ano) {
+        String cabecalho = "--------------\n";
+        cabecalho = cabecalho.concat(String.format("%02d",mes + 1).concat("/").concat(ano+"\n"));
+        cabecalho = cabecalho.concat("--------------\n");
+        cabecalho = cabecalho.concat("su - mo - tu - we - th - fr - sat\n");
+        return cabecalho;
     }
 
-    private static void tratarExibicaoDaUltimaSemanaDoMes(Calendar c, String semana) {
+    private static String tratarExibicaoDaUltimaSemanaDoMes(Calendar c, String semana) {
+        String ultimaSemana = "";
         if (c.get(Calendar.DAY_OF_MONTH) == c.getActualMaximum(Calendar.DAY_OF_MONTH)
                 && c.get(Calendar.DAY_OF_WEEK) < Calendar.SATURDAY) {
-            System.out.println(semana.substring(0, semana.lastIndexOf("-") - 1));
+            ultimaSemana =  (semana.substring(0, semana.lastIndexOf("-") - 1));
         }
+        return ultimaSemana;
     }
 
     private static String verificarEmQueDiaDaSemanaIniciaOMes(Calendar c, String semana) {
-        boolean conhecoODiaDaSemana = false;
-        int diaDaSemanaEmVerificacao = c.get(Calendar.DAY_OF_WEEK);
+        int diaEmVerificacao = c.get(Calendar.DAY_OF_WEEK);
 
-        for (int diaDaSemanaCorrente=Calendar.SUNDAY; diaDaSemanaCorrente<=Calendar.SATURDAY; diaDaSemanaCorrente++){
-            if(diaDaSemanaEmVerificacao!=diaDaSemanaCorrente && !conhecoODiaDaSemana)
-                semana=semana.concat("XX - ");
-            else conhecoODiaDaSemana = true;
+        for (int diaCorrente=Calendar.SUNDAY; diaCorrente<=Calendar.SATURDAY; diaCorrente++){
+            if(diaEmVerificacao!=diaCorrente) semana=semana.concat("XX - ");else break;
         }
         return semana;
     }
