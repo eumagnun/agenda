@@ -63,12 +63,12 @@ public class Main {
         return ultimaSemana;
     }
 
-    private static String verificarEmQueDiaDaSemanaIniciaOMes(Calendar c, String semana) {
+    private static String verificarEmQueDiaDaSemanaIniciaOMes(Calendar c, String primeiraSemana) {
         int diaEmVerificacao = c.get(Calendar.DAY_OF_WEEK);
 
         for (int diaCorrente=Calendar.SUNDAY; diaCorrente<=Calendar.SATURDAY; diaCorrente++){
-            if(diaEmVerificacao!=diaCorrente) semana=semana.concat("XX - ");else break;
+            if(diaEmVerificacao!=diaCorrente) primeiraSemana=primeiraSemana.concat("XX - ");else break;
         }
-        return semana;
+        return primeiraSemana;
     }
 }
